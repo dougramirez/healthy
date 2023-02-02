@@ -1,0 +1,295 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "FastAPI",
+        "version": "0.1.0"
+    },
+    "paths": {
+        "/reporting/report_runs": {
+            "post": {
+                "summary": "Create Report Run",
+                "operationId": "create_report_run_reporting_report_runs_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ReportRunIn"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ReportRunBase"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/reporting/report_runs/{report_run_id}": {
+            "get": {
+                "summary": "Get Report Run",
+                "operationId": "get_report_run_reporting_report_runs__report_run_id__get",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Report Run Id",
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "name": "report_run_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ReportRunOut"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/files/{file_id}": {
+            "get": {
+                "summary": "Get File",
+                "operationId": "get_file_files__file_id__get",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "File Id",
+                            "type": "string"
+                        },
+                        "name": "file_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "HTTPValidationError": {
+                "title": "HTTPValidationError",
+                "type": "object",
+                "properties": {
+                    "detail": {
+                        "title": "Detail",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ValidationError"
+                        }
+                    }
+                }
+            },
+            "ReportRunBase": {
+                "title": "ReportRunBase",
+                "type": "object",
+                "properties": {
+                    "report_run_id": {
+                        "title": "Report Run Id",
+                        "type": "string",
+                        "format": "uuid",
+                        "default": "975d277c-62f9-4e84-9835-2c977333f80b"
+                    },
+                    "report_type": {
+                        "title": "Report Type",
+                        "type": "string",
+                        "default": "email_engagement"
+                    },
+                    "created": {
+                        "title": "Created",
+                        "type": "string",
+                        "format": "date-time",
+                        "default": "2022-06-06T11:38:25.767021"
+                    },
+                    "status": {
+                        "title": "Status",
+                        "type": "string",
+                        "default": "pending"
+                    }
+                }
+            },
+            "ReportRunIn": {
+                "title": "ReportRunIn",
+                "type": "object",
+                "properties": {
+                    "report_type": {
+                        "title": "Report Type",
+                        "type": "string",
+                        "example": "email_engagement"
+                    }
+                }
+            },
+            "ReportRunOut": {
+                "title": "ReportRunOut",
+                "type": "object",
+                "properties": {
+                    "report_run_id": {
+                        "title": "Report Run Id",
+                        "type": "string",
+                        "format": "uuid",
+                        "default": "975d277c-62f9-4e84-9835-2c977333f80b"
+                    },
+                    "report_type": {
+                        "title": "Report Type",
+                        "type": "string",
+                        "default": "email_engagement"
+                    },
+                    "created": {
+                        "title": "Created",
+                        "type": "string",
+                        "format": "date-time",
+                        "default": "2022-06-06T11:38:25.767021"
+                    },
+                    "status": {
+                        "title": "Status",
+                        "type": "string",
+                        "default": "pending"
+                    },
+                    "succeeded_at": {
+                        "title": "Succeeded At",
+                        "type": "string",
+                        "format": "date-time",
+                        "default": "2022-06-06T11:38:25.768698"
+                    },
+                    "result": {
+                        "title": "Result",
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/ReportRunResult"
+                            }
+                        ],
+                        "default": {
+                            "file_id": "553be815-76f3-49db-b9d7-caca4b23cc3e",
+                            "url": "http://127.0.0.1:8000/files/553be815-76f3-49db-b9d7-caca4b23cc3e",
+                            "created": "2022-06-06T11:38:25.767846",
+                            "size": 666,
+                            "type": "csv"
+                        }
+                    }
+                }
+            },
+            "ReportRunResult": {
+                "title": "ReportRunResult",
+                "type": "object",
+                "properties": {
+                    "file_id": {
+                        "title": "File Id",
+                        "type": "string",
+                        "format": "uuid",
+                        "default": "553be815-76f3-49db-b9d7-caca4b23cc3e"
+                    },
+                    "url": {
+                        "title": "Url",
+                        "type": "string",
+                        "default": "http://127.0.0.1:8000/files/553be815-76f3-49db-b9d7-caca4b23cc3e"
+                    },
+                    "created": {
+                        "title": "Created",
+                        "type": "string",
+                        "format": "date-time",
+                        "default": "2022-06-06T11:38:25.767846"
+                    },
+                    "size": {
+                        "title": "Size",
+                        "type": "integer",
+                        "default": 666
+                    },
+                    "type": {
+                        "title": "Type",
+                        "type": "string",
+                        "default": "csv"
+                    }
+                }
+            },
+            "ValidationError": {
+                "title": "ValidationError",
+                "required": [
+                    "loc",
+                    "msg",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "loc": {
+                        "title": "Location",
+                        "type": "array",
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "integer"
+                                }
+                            ]
+                        }
+                    },
+                    "msg": {
+                        "title": "Message",
+                        "type": "string"
+                    },
+                    "type": {
+                        "title": "Error Type",
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
