@@ -1,10 +1,13 @@
 apiVersion: backstage.io/v1alpha1
-kind: Component
+kind: API
 metadata:
   name: healthy
+  description: Reference architecture for /healthy endpoints
   annotations:
     github.com/project-slug: dougramirez/healthy
 spec:
-  type: other
-  lifecycle: unknown
+  type: openapi
+  lifecycle: development
   owner: dougramirez
+  definition:
+    $text: https://github.com/dougramirez/healthy/tree/main/docs/openapi.json
