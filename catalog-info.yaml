@@ -9,5 +9,4 @@ spec:
   type: openapi
   lifecycle: development
   owner: dougramirez
-  definition:
-    $text: https://github.com/dougramirez/healthy/tree/main/docs/openapi.json
+  
